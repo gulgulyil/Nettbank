@@ -78,7 +78,8 @@ public class EnhetstestAdminKundeController {
     public void lagreKunde_LoggetInn_OK(){
         //arrange
         Kunde kunde1= new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Oslo","22224444","HeiHei");
-        when(sjekk.loggetInn()).thenReturn(null);
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+        when(repository.registrerKunde(kunde1)).thenReturn("OK");
 
         //act
         String resultat= adminKundeController.lagreKunde(kunde1);
