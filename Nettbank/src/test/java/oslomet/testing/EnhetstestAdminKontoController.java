@@ -117,21 +117,16 @@ public class EnhetstestAdminKontoController {
 
         Konto konto1=new Konto("01010110523","105010123456",720,"Lønnskonto","NOK",transaksjoner);
 
-<<<<<<< HEAD
+
         when(sjekk.loggetInn()).thenReturn(null);
-=======
-        when(sjekk.loggetInn()).thenReturn("105010123456");
->>>>>>> origin/gulnur
 
         //act
         String resultat=adminKontoController.registrerKonto(konto1);
 
         //asser
-<<<<<<< HEAD
+
         assertEquals("Ikke innlogget",resultat);
-=======
-        assertEquals("IKKE innlogget",resultat);
->>>>>>> origin/gulnur
+
     }
 
     @Test
@@ -208,7 +203,4 @@ public class EnhetstestAdminKontoController {
     }
 
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/gulnur
