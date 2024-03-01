@@ -4,7 +4,10 @@
 -- --------------------------------------------------------
 --
 -- Tabellstruktur for tabell `Konto`
---
+drop table Konto If exists;
+drop table Kunde if exists;
+drop table Poststed if exists;
+drop table Transaksjon if exists;
 
 CREATE TABLE IF NOT EXISTS `Konto` (
                                        `Kontonummer` varchar(20) NOT NULL,
