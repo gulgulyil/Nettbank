@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import oslomet.testing.API.AdminKontoController;
-import oslomet.testing.API.AdminKundeController;
 import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Models.Transaksjon;
@@ -26,18 +25,18 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EnhetstestAdminKontoController {
     @InjectMocks
-    //denne skal testes
+    //Denne skal testes
     private AdminKontoController adminKontoController;
 
     @Mock
-    //denne skal Mock'es
+    //Denne skal Mock'es
     private AdminRepository repository;
 
     @Mock
-    //denne skal Mock'es
+    //Denne skal Mock'es
     private Sikkerhet sjekk;
 
-    //Hent alle konto informasjon
+    //HENT ALLE KONTO informasjon
     //Tester hent alle konto (LoggetInn- OK)
 
     @Test
@@ -80,7 +79,7 @@ public class EnhetstestAdminKontoController {
         assertNull(resultat);
     }
 
-    //Registrer Konto
+    //REGISTRER KONTO
 
     //Tester registrer konto(Logget inn- OK)
     @Test
@@ -93,8 +92,8 @@ public class EnhetstestAdminKontoController {
         transaksjoner.add(transaksjon1);
         transaksjoner.add(transaksjon2);
 
-        Konto konto1=new Konto("01010110523","105010123456",720,"Lønnskonto","NOK",transaksjoner);
-        when(sjekk.loggetInn()).thenReturn("105010123456");
+        Konto konto1=new Konto("01010110523","105030123456",50000,"Privatkonto","USD",transaksjoner);
+        when(sjekk.loggetInn()).thenReturn("105030123456");
         when(repository.registrerKonto(konto1)).thenReturn("OK");
 
         //act
@@ -103,8 +102,8 @@ public class EnhetstestAdminKontoController {
         //assert
         assertEquals("OK",resultat);
     }
-    //Tester registrer konto(Ikke logget Inn)
 
+    //Tester registrer konto(Ikke logget Inn)
     @Test
     public void registrerKonto_IkkeLoggetInn(){
         //arranger
@@ -126,12 +125,44 @@ public class EnhetstestAdminKontoController {
         //asser
 
         assertEquals("Ikke innlogget",resultat);
-
     }
 
+
+    //ENDRE KONTO
+    //Tester endre konto (Logget inn OK)
+    @Test
+    public void endreKonto_LoggetInn_OK(){
+        // arrange
+        List<Transaksjon> transaksjoner = new ArrayList<>();
+
+        Transaksjon transaksjon1 = new Transaksjon(1, "20102012345",
+                100.5, "2015-03-15", "Fjordkraft", "1",
+                "105010123456");
+
+        Transaksjon transaksjon2 = new Transaksjon(2, "20102012345",
+                400.4, "2015-03-20", "Skagen", "1",
+                "105010123456");
+
+        transaksjoner.add(transaksjon1);
+        transaksjoner.add(transaksjon2);
+
+        Konto konto1 = new Konto("01010110523", "105020123456",
+                20000, "Lønnskonto", "USD", transaksjoner);
+
+        when(sjekk.loggetInn()).thenReturn("105020123456");
+
+        when(repository.endreKonto(any(Konto.class))).thenReturn("OK");
+        // act
+        String resultat = adminKontoController.endreKonto(konto1);
+
+        // assert
+        assertEquals("OK", resultat);
+    }
+
+
+    //Tester endre konto (Ikke Logget inn)
     @Test
     public void endreKonto_IkkeLoggetInn() {
-        //Tester endre konto (Ikke Logget inn)
 
         //arrange
         List<Transaksjon> transaksjoner = new ArrayList<>();
@@ -153,7 +184,8 @@ public class EnhetstestAdminKontoController {
         assertEquals("Ikke innlogget", resultat);
     }
 
-        //Slett konto-- Tester slett konto (logget inn-OK)
+        //SLETT KONTO
+        // Tester slett konto (logget inn-OK)
         @Test
         public void slettKonto_LoggetInn_OK(){
 
@@ -180,27 +212,26 @@ public class EnhetstestAdminKontoController {
         }
 
         //Tester slett konto(Ikke Logget Inn)
-    @Test
-    public void slettKonto_IkkeLoggetInn(){
-        //arrange
-        List<Transaksjon> transaksjoner = new ArrayList<>();
+        @Test
+        public void slettKonto_IkkeLoggetInn(){
+            //arrange
+            List<Transaksjon> transaksjoner = new ArrayList<>();
 
-        Transaksjon transaksjon1=new Transaksjon(1,"20102012345",100.5,"2015-03-15","Fjordkraft","1","105010123456");
-        Transaksjon transaksjon2=new Transaksjon(2,"20102012345",400.4,"2015-03-20","Skagen","1","105010123456");
+            Transaksjon transaksjon1=new Transaksjon(1,"20102012345",100.5,"2015-03-15","Fjordkraft","1","105010123456");
+            Transaksjon transaksjon2=new Transaksjon(2,"20102012345",400.4,"2015-03-20","Skagen","1","105010123456");
 
-        transaksjoner.add(transaksjon1);
-        transaksjoner.add(transaksjon2);
+            transaksjoner.add(transaksjon1);
+            transaksjoner.add(transaksjon2);
 
-        Konto konto1=new Konto("01010110523","105010123456",720,"Lømmskonto","NOK",transaksjoner);
+            Konto konto1=new Konto("01010110523","105010123456",720,"Lømmskonto","NOK",transaksjoner);
 
-        when(sjekk.loggetInn()).thenReturn(null);
+            when(sjekk.loggetInn()).thenReturn(null);
 
-        //act
-        String resultat = adminKontoController.slettKonto(konto1.getKontonummer());
+            //act
+            String resultat = adminKontoController.slettKonto(konto1.getKontonummer());
 
-        //assert
-        assertEquals("Ikke innlogget",resultat);
-    }
+            //assert
+            assertEquals("Ikke innlogget",resultat);
+        }
 
 }
-
