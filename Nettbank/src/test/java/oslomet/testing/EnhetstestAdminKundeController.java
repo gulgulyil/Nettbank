@@ -5,12 +5,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.API.AdminKundeController;
 import oslomet.testing.DAL.AdminRepository;
-import oslomet.testing.Models.Konto;
 import oslomet.testing.Models.Kunde;
-import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -77,8 +74,8 @@ public class EnhetstestAdminKundeController {
     @Test
     public void lagreKunde_LoggetInn_OK(){
         //arrange
-        Kunde kunde1= new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Oslo","22224444","HeiHei");
-        when(sjekk.loggetInn()).thenReturn("01010110523");
+        Kunde kunde1= new Kunde("10101234567","Gulnur","Yildiz","Osloveien 22","1234","Oslo","12345670","HeiHei");
+        when(sjekk.loggetInn()).thenReturn("10101234567");
         when(repository.registrerKunde(kunde1)).thenReturn("OK");
 
         //act
@@ -92,7 +89,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void lagreKunde_IkkeLoggetInn(){
         //arrange
-        Kunde kunde1=new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Oslo","22224444","HeiHei");
+        Kunde kunde1=new Kunde("10101234567","Gulnur","Yildiz","Osloveien 22","1234","Oslo","12345670","HeiHei");
 
         when(sjekk.loggetInn()).thenReturn(null);
 
@@ -108,9 +105,9 @@ public class EnhetstestAdminKundeController {
     @Test
     public void endreKunde_LoggetInn_OK(){
         //arrange
-        Kunde kunde1=new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Oslo","22224444","HeiHei");
+        Kunde kunde1=new Kunde("01010110523","Lene","Jensen","Osloveien 22","1234","Oslo","22224444","HeiHei");
 
-        when(sjekk.loggetInn()).thenReturn("02020220523");
+        when(sjekk.loggetInn()).thenReturn("01010110523");
         when(repository.endreKundeInfo(kunde1)).thenReturn("OK");
 
         //act
@@ -124,7 +121,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void endreKunde_IkkeLoggetInn(){
         //arrange
-        Kunde kunde1=new Kunde("01010110523","Lene","Jensen","Askerveien 22","3270","Oslo","22224444","HeiHei");
+        Kunde kunde1=new Kunde("01010110523","Lene","Jensen","Osloveien 22","1234","Oslo","22224444","HeiHei");
         when(sjekk.loggetInn()).thenReturn(null);
 
         //act
@@ -162,5 +159,7 @@ public class EnhetstestAdminKundeController {
         //assert
         assertEquals("Ikke logget inn",resultat);
     }
+
+}
 
 }
